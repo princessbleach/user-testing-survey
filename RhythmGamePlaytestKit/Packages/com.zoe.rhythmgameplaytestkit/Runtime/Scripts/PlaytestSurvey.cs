@@ -1,4 +1,3 @@
-
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -29,18 +28,17 @@ namespace RhythmGamePlaytestKit
         [Header("Feedback Message")]
         [SerializeField] private TMP_Text statusText;
 
+        private bool isSubmitting;
+
         private void Awake()
         {
             Instance = this;
-
         }
 
         public static void Open()
         {
             if (Instance != null && Instance.surveyPanel != null)
                 Instance.surveyPanel.SetActive(true);
-            else
-                Debug.LogWarning("PlaytestSurvey instance not found.");
         }
 
         public static void Close()
@@ -51,6 +49,9 @@ namespace RhythmGamePlaytestKit
 
         public void SubmitSurvey()
         {
+            if (isSubmitting)
+                return;
+
             if (consentToggle == null || !consentToggle.isOn)
             {
                 ShowMessage("Please provide consent before submitting.");
@@ -58,6 +59,7 @@ namespace RhythmGamePlaytestKit
             }
 
             SurveyData data = new SurveyData();
+
             data.consentGiven = true;
 
             data.gameplayEnjoyment = Mathf.RoundToInt(enjoymentSlider.value);
@@ -67,21 +69,41 @@ namespace RhythmGamePlaytestKit
 
             data.latencyIssues = latencyToggle != null && latencyToggle.isOn;
 
-            data.additionalComments = commentsInput != null ? commentsInput.text : "";
-            data.bugReport = bugReportInput != null ? bugReportInput.text : "";
+            data.additionalComments =
+                commentsInput != null ? commentsInput.text : "";
 
-            bool success = SurveyExporter.ExportSurvey(data);
+            data.bugReport =
+                bugReportInput != null ? bugReportInput.text : "";
 
-            if (success)
+            // Save local backup first
+            bool savedLocally = SurveyExporter.ExportSurvey(data);
+
+            if (!savedLocally)
             {
-                ShowMessage("Thank you! Your feedback has been saved.");
-                Debug.Log("Playtest survey submitted: " + data.sessionID);
-                surveyPanel.SetActive(false);
+                ShowMessage("Could not save feedback. Please try again.");
+                return;
             }
-            else
-            {
-                ShowMessage("Something went wrong. Please try again.");
-            }
+
+            // Upload to Google Sheets
+            isSubmitting = true;
+            ShowMessage("Uploading your feedback...");
+
+            StartCoroutine(
+                SurveyExporter.SendToGoogleSheets(data, (uploaded) =>
+                {
+                    isSubmitting = false;
+
+                    if (uploaded)
+                    {
+                        ShowMessage("Thank you! Your feedback has been submitted.");
+                        surveyPanel.SetActive(false);
+                    }
+                    else
+                    {
+                        ShowMessage("Saved locally, but online upload failed.");
+                    }
+                })
+            );
         }
 
         private void ShowMessage(string message)

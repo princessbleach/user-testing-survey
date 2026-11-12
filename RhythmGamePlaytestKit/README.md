@@ -4,18 +4,6 @@
 
 The Rhythm Game Playtest Kit allows developers to collect structured player feedback during playtesting sessions. It includes a customisable survey interface, consent management, automatic session identification, local JSON backups and remote data submission through Google Sheets.
 
-## Features
-
-- **Player consent:** Responses are only collected after the player provides consent.
-- **Automatic session identification:** Each submission receives a unique GUID.
-- **Timestamp recording:** Submission dates and times are recorded in UTC.
-- **Game information:** Automatically records the game version, platform and device model.
-- **Quantitative feedback:** Four rating questions covering gameplay enjoyment, rhythm clarity, difficulty and audio feedback.
-- **Qualitative feedback:** Players can submit additional comments and bug reports.
-- **Latency reporting:** Players can indicate whether they experienced latency issues.
-- **Customisable themes:** Developers can configure four survey colours: background, surface, primary and accent.
-- **Local data storage:** Responses are saved as individual JSON files on the player's device.
-- **Remote data collection:** Responses are submitted to a connected Google Sheets spreadsheet.
 
 ## Requirements
 
@@ -30,9 +18,9 @@ The Rhythm Game Playtest Kit allows developers to collect structured player feed
 The package can be installed through Unity Package Manager using its Git repository URL.
 
 1. Open the Unity project.
-2. Navigate to **Window → Package Management → Package Manager**.
+2. Navigate to Window then Package Management then Package Manager.
 3. Click the `+` button.
-4. Select **Add package from git URL**.
+4. Select Add package from git URL.
 5. Enter:
 
 `https://github.com/princessbleach/user-testing-survey.git?path=/RhythmGamePlaytestKit/Packages/com.zoe.rhythmgameplaykit`
@@ -44,20 +32,20 @@ The package can be installed through Unity Package Manager using its Git reposit
 ### 1. Add the survey prefab
 
 1. Locate the package in the Project window.
-2. Navigate to `Runtime/Prefabs`.
-3. Drag the `RhythmGameSurvey` prefab into your scene.
+2. Navigate to Runtime/Prefabs.
+3. Drag the RhythmGameSurvey prefab into your scene.
 4. Ensure the scene contains an EventSystem to allow mouse and UI interaction.
 
 ### 2. Configure the survey theme
 
-The `PlaytestTheme` component exposes four customisable colours:
+The PlaytestTheme component exposes four customisable colours:
 
 - Background Colour
 - Surface Colour
 - Primary Colour
 - Accent Colour
 
-The `PlaytestThemeApplier` component applies these colours to the UI elements assigned to its colour arrays.
+The PlaytestThemeApplier component applies these colours to the UI elements assigned to its colour arrays.
 
 Developers can customise the survey appearance through the Unity Inspector.
 
@@ -68,10 +56,10 @@ The package uses Google Apps Script as a web endpoint to receive survey response
 To configure a backend:
 
 1. Create a Google spreadsheet.
-2. Create a sheet tab named `Survey Responses`.
-3. Set up a Google Apps Script web app with a `doPost` function to receive JSON submissions.
+2. Create a sheet tab named Survey Responses.
+3. Set up a Google Apps Script web app with a doPost function to receive JSON submissions.
 4. Deploy the script as a Web App.
-5. Configure the deployed Web App URL in `SurveyExporter.cs`.
+5. Configure the deployed Web App URL in SurveyExporter.cs.
 
 The deployed endpoint must be accessible to the game without requiring the player to sign into Google.
 
@@ -79,14 +67,14 @@ The deployed endpoint must be accessible to the game without requiring the playe
 
 ### 4. Connect the survey to gameplay
 
-The `PlaytestSurvey` component provides methods for opening and closing the survey:
+The PlaytestSurvey component provides methods for opening and closing the survey:
 
-- `PlaytestSurvey.Open()`
-- `PlaytestSurvey.Close()`
+- PlaytestSurvey.Open()
+- PlaytestSurvey.Close()
 
 These static methods can be called from other game scripts.
 
-The Submit button must be connected to `PlaytestSurvey.SubmitSurvey()` through its Button On Click event.
+The Submit button must be connected to PlaytestSurvey.SubmitSurvey() through its Button On Click event.
 
 ## Data Collection
 
@@ -113,7 +101,7 @@ A local JSON backup is created for each successful local export.
 
 Files are stored at:
 
-`Application.persistentDataPath/PlaytestKit/SurveyResponses/`
+Application.persistentDataPath/PlaytestKit/SurveyResponses/
 
 Each file is named using its generated session ID.
 
@@ -159,17 +147,6 @@ com.zoe.rhythmgameplaykit/
 ├── package.json
 └── README.md
 ```
-
-## Technologies
-
-- Unity 6
-- C#
-- Unity UI
-- TextMeshPro
-- UnityWebRequest
-- JSON serialisation
-- Google Apps Script
-- Google Sheets
 
 ## Author
 

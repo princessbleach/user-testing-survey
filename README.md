@@ -3,6 +3,8 @@ Zoe Efstathiou
 
 2423029
 
+![demo](https://github.com/princessbleach/user-testing-survey/blob/main/playtestdemo-gif.gif?raw=true)
+
 For this project I split the work with a friend who handled the telemetry side.  
 
 

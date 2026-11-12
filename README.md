@@ -17,11 +17,23 @@ The survey also features a consent tick box to ensure player's data is collected
 
 A local JSON backup is created for each successful local export. Survey responses are sent to the configured Google Apps Script endpoint using an HTTP POST request. The Apps Script receives the JSON data and appends it as a new row in Google Sheets. A successful local save and a successful remote upload are handled separately. If remote submission fails, the local JSON backup remains available.
 
+![form](https://github.com/princessbleach/user-testing-survey/blob/main/feedback%20proof.png?raw=true)
+
+
 To use the plugin, I have included a README.md file within the package folder to enable users easier use. Once imported into Unity using the Git repository URL, developers can easily drag the prefab into the scene. 
 
 I also added a simple way for developers to easily apply their colour scheme to the plugin without having to enter code files. They can easily set their four colours in the PlayTestTheme component. These colours are then used within the UI of the survey. The four sections include:  Background Colour, Surface Colour,Primary Colour, Accent Colour.
 
+This data will be useful for us in our FMP so that we can collate a balance of quantative and qualitative data. Players can give detailed descriptions of bugs or feedback whilst also giving quantitive answers that we can analyse in more depth.
 
+
+### Script Explanations
+
+- **SurveyData.cs:** Defines the survey data structure and generates session IDs
+- **PlaytestSurvey.cs:** Handles player interaction, consent and survey submission
+- **SurveyExporter.cs:** Handles JSON export and remote submission
+- **PlaytestTheme.cs:** Defines customisable survey colours
+- **PlaytestThemeApplier.cs:** Applies selected colours to UI elements
 
 ### Improvements
 

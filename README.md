@@ -44,3 +44,11 @@ The Google Sheets method is not fully efficient and was done to save time but if
 I would also add more customisation options such as custom font changes for developers to easily change like I did with colours. 
 
 I also haven't yet connected my side of the projects with my parters telemetry side, although this would be simple to do as my partner's system automatically bundles any other exported JSON files to be sent to their Supabass Postgres table, so when we implement this fully into our FMP it will be compatible and simple. 
+
+
+
+### AI Declaration
+
+AI (ChatGPT) was used to help write the plugin's README.md
+
+
